@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -31,5 +32,21 @@ export class AuthService {
         res = error.code;
       });
     return res;
+  }
+
+  EstadoUsuario() {
+    return new Observable((observer) => {
+      getAuth().onAuthStateChanged((user) => {
+        if (user) {
+          observer.next(user);
+        } else {
+          observer.next(null);
+        }
+      });
+    });
+  }
+
+  cerrarSesion() {
+    getAuth().signOut();
   }
 }
