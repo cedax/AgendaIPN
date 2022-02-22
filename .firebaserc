@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "agenda-ipn": {
+      "hosting": {
+        "agenda": [
+          "agenda-ipn"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "agenda-ipn"
+  }
+}
