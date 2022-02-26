@@ -1,0 +1,23 @@
+.contenedor{
+    border-radius: 1em;
+}
+
+.acciones{
+    display: flex;
+    justify-content: space-between;
+}
+
+.accion {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+
+    label{
+        margin-bottom: 0;
+        margin-right: 5px;
+        cursor: pointer;
+    }
+
+    text-decoration: none;
+    cursor: pointer;
+}

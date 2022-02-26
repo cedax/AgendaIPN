@@ -2,34 +2,6 @@
     box-sizing: border-box;
 }
 
-.formStyle {
-    aspect-ratio: 9 / 19.5;
-    background-color: var(--container-color);
-    border-radius: 3em;
-    box-shadow: var(--container-shadow);
-    height: 530px;
-    overflow: hidden;
-    padding: 3em 1.5em;
-    width: 100%;
-    margin: 1em 0;
-}
-
-.botonesRow {
-    height: 70px;
-
-    .col-md-6:first-child {
-        margin-left: 0;
-    }
-
-    .col-md-6:last-child {
-        margin-right: 0;
-    }
-}
-
-.row {
-    margin: 0;
-}
-
 a {
     color: var(--title-color);
     text-decoration: none;
@@ -47,6 +19,7 @@ button {
     font: inherit;
     margin: 0;
     padding: 0;
+    margin-top: 1em;
 }
 
 h1 {
@@ -118,11 +91,6 @@ p {
     background-image: linear-gradient(135deg, #eb4435, #e03020);
 }
 
-.form {
-    display: grid;
-    gap: .8em;
-}
-
 .form__input {
     background-color: var(--input-color);
     border: 2px solid var(--border-color);
@@ -155,17 +123,29 @@ p {
     text-align: center;
 }
 
-// media query 767px min
-@media (max-width: 767px) {
-    .formStyle {
-        height: 630px;
-    }
+.contenedor {
+    border-radius: 1em;
+    padding: 1em;
+}
 
-    .text--center{
-        margin-top: 115px;
-    }
+textarea {
+    color: var(--text-color);
+}
 
-    .col-md-6{
-        padding: 0;
-    }
+.btn-primary {
+    background-color: var(--main-color);
+    height: 3em;
+}
+
+.form-select{
+    height: 3em;
+    border-radius: 0.8em;
+    border: 1px solid var(--border-color);
+    background-color: var(--input-color);
+    color: var(--text-color);
+    padding: 0.5em 1em;
+}
+
+.form-select:hover{
+    background-color: var(--input-hover-color);
 }

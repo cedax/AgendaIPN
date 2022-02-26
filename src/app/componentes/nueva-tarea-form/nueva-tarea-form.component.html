@@ -1,0 +1,35 @@
+<div class="contenedor">
+    <form class="form" [formGroup]="nuevaTareaForm" (ngSubmit)="onSubmit()" novalidate>
+        
+        <label class="form__label" for="detalles">
+            Detalles
+            <label
+                *ngIf="nuevaTareaForm.controls['detalles'].errors?.['required'] && nuevaTareaForm.controls['detalles'].touched">
+                Los detalles son requeridos
+            </label>
+        </label>
+        <textarea formControlName="detalles" class="form__input" name="detalles" type="text"></textarea>
+    
+        <label class="form__label" for="fechaEntrega">
+            Fecha de entrega
+            <label *ngIf="nuevaTareaForm.controls['fechaEntrega'].errors?.['required'] && nuevaTareaForm.controls['fechaEntrega'].touched">
+                La fecha de entrega es requerida
+            </label>
+        </label>
+        <input formControlName="fechaEntrega" class="form__input" name="fechaEntrega" type="datetime-local" />
+
+        <label class="form__label" for="materia">
+            Materia
+            <label *ngIf="nuevaTareaForm.controls['materia'].errors?.['required'] && nuevaTareaForm.controls['materia'].touched">
+                La materia es requerida
+            </label>
+        </label>
+        <select formControlName="materia" name="materia" class="form-select w-100">
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+        </select>
+    
+        <button [disabled]="!nuevaTareaForm.valid" class="btn btn-primary w-100" type="submit">Crear tarea</button>
+    </form>
+</div>

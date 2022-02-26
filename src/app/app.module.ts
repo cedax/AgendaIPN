@@ -6,9 +6,10 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './vistas/publico/login/login.component';
 import { RegistroComponent } from './vistas/publico/registro/registro.component';
 import { PagenotfoundComponent } from './vistas/publico/pagenotfound/pagenotfound.component';
-import { InicioComponent } from './vistas/publico/inicio/inicio.component';
+import { InicioComponent } from './vistas/privado/inicio/inicio.component';
 
 import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
@@ -16,24 +17,41 @@ import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { provideStorage,getStorage } from '@angular/fire/storage';
 
+import { AuthService } from './servicios/auth/auth.service';
+import { TemaService } from './servicios/tema.service';
+import { HorarioComponent } from './vistas/privado/horario/horario.component';
+import { ProximasTareasComponent } from './componentes/proximas-tareas/proximas-tareas.component';
+import { NuevaTareaFormComponent } from './componentes/nueva-tarea-form/nueva-tarea-form.component';
+import { HorarioListaComponent } from './componentes/horario-lista/horario-lista.component';
+import { PanelComponent } from './vistas/privado/panel/panel.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegistroComponent,
     PagenotfoundComponent,
-    InicioComponent
+    InicioComponent,
+    HorarioComponent,
+    ProximasTareasComponent,
+    NuevaTareaFormComponent,
+    HorarioListaComponent,
+    PanelComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    FormsModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage())
   ],
-  providers: [],
+  providers: [
+    AuthService,
+    TemaService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

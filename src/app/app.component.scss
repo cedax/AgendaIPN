@@ -1,0 +1,28 @@
+.navbar-brand:hover{
+    color: var(--text-color);
+}
+
+@media screen and (max-width: 768px) {
+    .navbarContenido {
+        display: block;
+    }
+
+    .acciones {
+        flex-wrap: wrap-reverse;
+        justify-content: center;
+
+        .btn{
+            width: 100%;
+        }
+    }
+
+    .cambiarTema{
+        margin-top: 20px;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .navbarContenido{
+        display: flex;
+    }
+}

@@ -19,8 +19,4 @@ export class InicioComponent implements OnInit {
     });
   }
 
-  cerrarSesion(){
-    this.auth.cerrarSesion();
-  }
-
 }

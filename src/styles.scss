@@ -3,3 +3,12 @@
 * {
   font-family: "Roboto", sans-serif !important;
 }
+
+.button:focus, .button:hover, input:focus, input:hover {
+  box-shadow: none;
+  outline: none;
+}
+
+@import './resources/styles/themes/default.scss';
+@import './resources/styles/themes/dark.scss';
+@import './resources/styles/base.scss';

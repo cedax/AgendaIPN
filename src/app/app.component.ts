@@ -3,6 +3,7 @@ import { Firestore, collectionData, collection, DocumentData } from '@angular/fi
 import { Observable } from 'rxjs';
 import { AuthService } from "./servicios/auth/auth.service";
 import { Router } from '@angular/router';
+import { TemaService } from './servicios/tema.service';
 
 @Component({
   selector: 'app-root',
@@ -11,14 +12,23 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   usuarioLoggeado: boolean = false;
+  
+  get dark() {
+    return this.temaServicio.theme === 'dark';
+  }
+
+  set dark(enabled: boolean) {
+    this.temaServicio.theme = enabled ? 'dark' : null;
+  }
 
   item$: Observable<DocumentData[]>;
-  constructor(private firestore: Firestore, private auth: AuthService, private router: Router) {
+  constructor(private temaServicio: TemaService, private firestore: Firestore, private auth: AuthService, private router: Router) {
     const collectionFB = collection(firestore, 'tareas');
     this.item$ = collectionData(collectionFB);
   }
 
   ngOnInit() {
+
     this.item$.subscribe(item => {
       //console.log(item);
     });
@@ -30,5 +40,9 @@ export class AppComponent {
         this.usuarioLoggeado = false;
       }
     });
+  }
+
+  cerrarSesion(){
+    this.auth.cerrarSesion();
   }
 }

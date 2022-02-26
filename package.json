@@ -6,7 +6,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "config": "ts-node ./scripts/setenv.ts",
-    "start": "npm run config -- --environment=dev && ng serve",
+    "start": "npm run config -- --environment=dev && ng serve --host=0.0.0.0 --disable-host-check",
     "build": "npm run config -- --environment=prod && ng build"
   },
   "private": true,

@@ -1,0 +1,33 @@
+body {
+  background : var(--body-color);
+  color      : var(--text-color);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color : var(--title-color);
+}
+
+a {
+  color: var(--text-color);
+}
+
+a:hover {
+  color: var(--main-color);
+}
+
+.contenedor {
+  background : var(--container-color);
+  box-shadow : var(--container-shadow);
+}
+
+.navbar {
+  background-color: var(--container-color);
+  
+  .container {
+    background-color: var(--container-color);
+  }
+}
+
+.active {
+  color: var(--main-color);
+}
