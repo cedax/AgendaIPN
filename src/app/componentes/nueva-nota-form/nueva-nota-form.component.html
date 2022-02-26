@@ -1,0 +1,27 @@
+<div class="contenedor">
+    <form class="form" [formGroup]="nuevaNotaForm" (ngSubmit)="onSubmit()" novalidate>
+        
+        <label class="form__label" for="detalles">
+            Detalles
+            <label
+                *ngIf="nuevaNotaForm.controls['detalles'].errors?.['required'] && nuevaNotaForm.controls['detalles'].touched">
+                Los detalles son requeridos
+            </label>
+        </label>
+        <textarea formControlName="detalles" class="form__input" name="detalles" type="text"></textarea>
+    
+        <label class="form__label" for="materia">
+            Materia
+            <label *ngIf="nuevaNotaForm.controls['materia'].errors?.['required'] && nuevaNotaForm.controls['materia'].touched">
+                La materia es requerida
+            </label>
+        </label>
+        <select formControlName="materia" name="materia" class="form-select w-100">
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+        </select>
+    
+        <button [disabled]="!nuevaNotaForm.valid" class="btn btn-primary w-100" type="submit">Crear nota</button>
+    </form>
+</div>

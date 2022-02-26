@@ -24,6 +24,7 @@ import { ProximasTareasComponent } from './componentes/proximas-tareas/proximas-
 import { NuevaTareaFormComponent } from './componentes/nueva-tarea-form/nueva-tarea-form.component';
 import { HorarioListaComponent } from './componentes/horario-lista/horario-lista.component';
 import { PanelComponent } from './vistas/privado/panel/panel.component';
+import { NuevaNotaFormComponent } from './componentes/nueva-nota-form/nueva-nota-form.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { PanelComponent } from './vistas/privado/panel/panel.component';
     ProximasTareasComponent,
     NuevaTareaFormComponent,
     HorarioListaComponent,
-    PanelComponent
+    PanelComponent,
+    NuevaNotaFormComponent
   ],
   imports: [
     BrowserModule,
