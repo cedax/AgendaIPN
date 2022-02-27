@@ -16,15 +16,20 @@ import { environment } from '../environments/environment';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { provideStorage,getStorage } from '@angular/fire/storage';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore/'; 
 
 import { AuthService } from './servicios/auth/auth.service';
 import { TemaService } from './servicios/tema.service';
+import { ObtenerDatosService } from './servicios/obtener-datos.service';
+
 import { HorarioComponent } from './vistas/privado/horario/horario.component';
 import { ProximasTareasComponent } from './componentes/proximas-tareas/proximas-tareas.component';
 import { NuevaTareaFormComponent } from './componentes/nueva-tarea-form/nueva-tarea-form.component';
 import { HorarioListaComponent } from './componentes/horario-lista/horario-lista.component';
 import { PanelComponent } from './vistas/privado/panel/panel.component';
 import { NuevaNotaFormComponent } from './componentes/nueva-nota-form/nueva-nota-form.component';
+import { MateriaDeHorarioComponent } from './componentes/materia-de-horario/materia-de-horario.component';
+import { AngularFireModule } from '@angular/fire/compat';
 
 @NgModule({
   declarations: [
@@ -38,7 +43,8 @@ import { NuevaNotaFormComponent } from './componentes/nueva-nota-form/nueva-nota
     NuevaTareaFormComponent,
     HorarioListaComponent,
     PanelComponent,
-    NuevaNotaFormComponent
+    NuevaNotaFormComponent,
+    MateriaDeHorarioComponent
   ],
   imports: [
     BrowserModule,
@@ -48,11 +54,14 @@ import { NuevaNotaFormComponent } from './componentes/nueva-nota-form/nueva-nota
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
-    provideStorage(() => getStorage())
+    provideStorage(() => getStorage()),
+    AngularFirestoreModule,
+    AngularFireModule.initializeApp(environment.firebase),
   ],
   providers: [
     AuthService,
-    TemaService
+    TemaService,
+    ObtenerDatosService
   ],
   bootstrap: [AppComponent]
 })
