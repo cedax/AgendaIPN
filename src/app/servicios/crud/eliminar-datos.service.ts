@@ -4,13 +4,11 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 @Injectable({
   providedIn: 'root'
 })
-export class ObtenerDatosService {
+export class EliminarDatosService {
 
   constructor(private firestore: AngularFirestore) { }
 
-  obtenerMaterias(UUID: string) {
-    return this.firestore.collection('materias').ref.where('UUID', '==', UUID).get();
+  eliminarMateria(id: string): Promise<void> {
+    return this.firestore.collection('materias').doc(id).delete();
   }
-
-
 }

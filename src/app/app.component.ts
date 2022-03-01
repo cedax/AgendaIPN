@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-import { Firestore, collectionData, collection, DocumentData } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Firestore } from '@angular/fire/firestore';
 import { AuthService } from "./servicios/auth/auth.service";
-import { Router } from '@angular/router';
 import { TemaService } from './servicios/tema.service';
 
 @Component({
@@ -13,36 +11,19 @@ import { TemaService } from './servicios/tema.service';
 export class AppComponent {
   usuarioLoggeado: boolean = false;
   
-  get dark() {
-    return this.temaServicio.theme === 'dark';
-  }
+  get dark() { return this.temaServicio.theme === 'dark'; }
 
-  set dark(enabled: boolean) {
-    this.temaServicio.theme = enabled ? 'dark' : null;
-  }
+  set dark(enabled: boolean) { this.temaServicio.theme = enabled ? 'dark' : null; }
 
-  item$: Observable<DocumentData[]>;
-  constructor(private temaServicio: TemaService, private firestore: Firestore, private auth: AuthService, private router: Router) {
-    const collectionFB = collection(firestore, 'tareas');
-    this.item$ = collectionData(collectionFB);
-  }
+  constructor(private temaServicio: TemaService, private firestore: Firestore, private auth: AuthService) { }
 
-  ngOnInit() {
-
-    this.item$.subscribe(item => {
-      //console.log(item);
-    });
-
+  ngOnInit(): void {
     this.auth.EstadoUsuario().subscribe(user => {
-      if (user) {
-        this.usuarioLoggeado = true;
-      }else {
-        this.usuarioLoggeado = false;
-      }
+      user ? this.usuarioLoggeado = true : this.usuarioLoggeado = false;
     });
   }
 
-  cerrarSesion(){
+  cerrarSesion(): void {
     this.auth.cerrarSesion();
   }
 }

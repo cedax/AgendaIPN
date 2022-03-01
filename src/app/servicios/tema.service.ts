@@ -8,7 +8,7 @@ export class TemaService {
     this.theme = localStorage.getItem('tema');
   }
 
-  get theme(): any {
+  get theme() {
     return document.documentElement.getAttribute('theme');
   }
 

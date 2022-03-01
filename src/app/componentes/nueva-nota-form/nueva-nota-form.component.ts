@@ -9,27 +9,23 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
 export class NuevaNotaFormComponent implements OnInit {
     nuevaNotaForm!: FormGroup;
-    enviado: boolean = false;
   
     constructor(private fb: FormBuilder) {
       this.createForm();
     }
   
-    ngOnInit(): void {
-      
-    }
+    ngOnInit(): void { }
   
-    createForm() {
+    createForm(): void {
       this.nuevaNotaForm = this.fb.group({
         detalles: ["", [Validators.required]],
         materia: ["", [Validators.required]],
       });
     }
   
-    onSubmit() {
-      this.enviado = true;
+    onSubmit(): void {
       if (this.nuevaNotaForm.valid) {
         console.log("Formulario válido");
       }
-    }  
+    }
 }

@@ -1,15 +1,15 @@
 <div class="container">
     <div class="contenedor mb-4">
-        <form class="form" [formGroup]="nuevaNotaForm" (ngSubmit)="onSubmit()" novalidate>
+        <form class="form" [formGroup]="nuevaTareaForm" (ngSubmit)="onSubmit()" novalidate>
             
             <div class="row">
                 <div class="col-md-3">
                     <label class="form__label" for="materia">
                         Materia
-                        <label *ngIf="nuevaNotaForm.controls['materia'].errors?.['required'] && nuevaNotaForm.controls['materia'].touched">
+                        <label *ngIf="nuevaTareaForm.controls['materia'].errors?.['required'] && nuevaTareaForm.controls['materia'].touched">
                             La materia es requerida
                         </label>
-                        <label *ngIf="nuevaNotaForm.errors?.['horaDia']">
+                        <label *ngIf="nuevaTareaForm.errors?.['horaDia']">
                             Selecciona al menos 1 horario
                         </label>
                     </label>
@@ -39,7 +39,7 @@
                 </div>
             </div>
         
-            <button [disabled]="!nuevaNotaForm.valid" class="btn btn-primary text-white w-100" type="submit">Registrar materia</button>
+            <button [disabled]="!nuevaTareaForm.valid" class="btn btn-primary text-white w-100" type="submit">Registrar materia</button>
         </form>
     </div>
 

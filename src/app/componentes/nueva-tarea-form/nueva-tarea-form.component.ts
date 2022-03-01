@@ -8,15 +8,12 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 })
 export class NuevaTareaFormComponent implements OnInit {
   nuevaTareaForm!: FormGroup;
-  enviado: boolean = false;
 
   constructor(private fb: FormBuilder) {
     this.createForm();
   }
 
-  ngOnInit(): void {
-    
-  }
+  ngOnInit(): void { }
 
   createForm() {
     this.nuevaTareaForm = this.fb.group({
@@ -27,7 +24,6 @@ export class NuevaTareaFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.enviado = true;
     if (this.nuevaTareaForm.valid) {
       console.log("Formulario válido");
     }

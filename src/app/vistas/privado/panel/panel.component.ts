@@ -2,46 +2,35 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/servicios/auth/auth.service';
+ 
+import { AgregarDatosService } from 'src/app/servicios/crud/agregar-datos.service';
+import { ObtenerDatosService } from 'src/app/servicios/crud/obtener-datos.service';
 
-import { AgregarDatosService } from 'src/app/servicios/agregar-datos.service';
-import { ObtenerDatosService } from 'src/app/servicios/obtener-datos.service';
+import { Materia } from 'src/app/interfaces/materia';
 
 @Component({
   selector: 'app-panel',
   templateUrl: './panel.component.html',
   styleUrls: ['./panel.component.scss']
 })
-export class PanelComponent implements OnInit {
-  nuevaNotaForm!: FormGroup;
-  enviado: boolean = false;
-  UUID: string = "";
 
-  datosMateria: Array<any> = [];
+export class PanelComponent implements OnInit {
+  nuevaTareaForm!: FormGroup;
+  UUID!: string;
+  datosMateria: Materia[] = [];
 
   constructor(private obtenerDatosService:ObtenerDatosService, private agregarDatosService: AgregarDatosService, private fb: FormBuilder, private auth: AuthService, private router: Router) {
     this.createForm();
   }
 
   ngOnInit(): void {
-    this.auth.EstadoUsuario().subscribe(user => {
-      if (user) {
-        // @ts-ignore
-        this.UUID = user.uid;
-        this.obtenerDatosService.obtenerMaterias(this.UUID).then((e) => {
-          e.forEach(element => {
-            const data:any = element.data();
-            const datoFinal = {
-              materia: data.materia,
-              horaDiaLunes: data.horaDiaLunes,
-              horaDiaMartes: data.horaDiaMartes,
-              horaDiaMiercoles: data.horaDiaMiercoles,
-              horaDiaJueves: data.horaDiaJueves,
-              horaDiaViernes: data.horaDiaViernes,
-              UUID: data.UUID,
-              id: element.id
-            }
-            this.datosMateria.push(datoFinal);
-          });
+    this.auth.EstadoUsuario().subscribe(usuario => {
+      if (usuario) {
+        this.UUID = usuario.uid;
+        this.obtenerDatosService.obtenerMaterias(this.UUID).then((materias: Materia[]) => {
+          for(let materia of materias){
+            this.datosMateria.push(materia);
+          }
         });
       } else {
         this.router.navigate(['/login']);
@@ -49,8 +38,8 @@ export class PanelComponent implements OnInit {
     });
   }
 
-  createForm() {
-    this.nuevaNotaForm = this.fb.group({
+  createForm(): void {
+    this.nuevaTareaForm = this.fb.group({
       materia: ["", [Validators.required]],
       horaDiaLunes: "",
       horaDiaMartes: "",
@@ -60,18 +49,16 @@ export class PanelComponent implements OnInit {
     });
   }
 
-  onSubmit() {
-    this.enviado = true;
-
-    if (this.nuevaNotaForm.value.horaDiaLunes == "" && this.nuevaNotaForm.value.horaDiaMartes == "" && this.nuevaNotaForm.value.horaDiaMiercoles == "" && this.nuevaNotaForm.value.horaDiaJueves == "" && this.nuevaNotaForm.value.horaDiaViernes == "") {
-      this.nuevaNotaForm.setErrors({
+  onSubmit(): void {
+    if (this.nuevaTareaForm.value.horaDiaLunes == "" && this.nuevaTareaForm.value.horaDiaMartes == "" && this.nuevaTareaForm.value.horaDiaMiercoles == "" && this.nuevaTareaForm.value.horaDiaJueves == "" && this.nuevaTareaForm.value.horaDiaViernes == "") {
+      this.nuevaTareaForm.setErrors({
         horaDia: "Debe seleccionar al menos una hora"
       });
     }
 
-    if (this.nuevaNotaForm.valid) {
-      const datosForm = this.nuevaNotaForm.value;
-      const objetoFinal = {
+    if (this.nuevaTareaForm.valid) {
+      const datosForm = this.nuevaTareaForm.value;
+      const objetoFinal: Materia = {
         materia: datosForm.materia,
         horaDiaLunes: datosForm.horaDiaLunes,
         horaDiaMartes: datosForm.horaDiaMartes,
@@ -81,9 +68,9 @@ export class PanelComponent implements OnInit {
         UUID: this.UUID,
         id: ""
       }
-      this.agregarDatosService.agregarMateria(objetoFinal).then((e) => {
-        objetoFinal["id"] = e.id;
-        this.nuevaNotaForm.reset()
+      this.agregarDatosService.agregarMateria(objetoFinal).then((documentoAgregado) => {
+        objetoFinal["id"] = documentoAgregado.id;
+        this.nuevaTareaForm.reset()
         this.datosMateria.push(objetoFinal);
       }).catch((e) => {
         console.log(e);

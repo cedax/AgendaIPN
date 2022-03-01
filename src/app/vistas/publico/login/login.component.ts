@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from '@angular/router';
 import { AuthService } from "./../../../servicios/auth/auth.service";
-
+ 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -24,21 +24,23 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  createForm() {
+  createForm(): void {
     this.loginForm = this.fb.group({
       email: ["", [Validators.required, Validators.email, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
       password: ["", [Validators.required, Validators.minLength(6)]]
     });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     this.enviado = true;
     if (this.loginForm.valid) {
-      this.auth.logearUsuario(this.loginForm.value.email, this.loginForm.value.password).then(res => {
-        if (res === 'auth/user-not-found') {
+      this.auth.logearUsuario(this.loginForm.value.email, this.loginForm.value.password).then(respuesta => {
+        if (respuesta === 'auth/user-not-found') {
           this.loginForm.get('email')?.setErrors({ userNotFound: true });
-        } else if (res === 'auth/wrong-password') {
+        } else if (respuesta === 'auth/wrong-password') {
           this.loginForm.get('password')?.setErrors({ wrongPassword: true });
+        } else {
+          this.loginForm.reset();
         }
       });
     }

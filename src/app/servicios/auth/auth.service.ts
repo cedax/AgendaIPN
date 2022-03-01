@@ -1,52 +1,40 @@
 import { Injectable } from '@angular/core';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, Auth } from "firebase/auth";
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  auth: Auth = getAuth();
+
   constructor() { }
 
-  async crearUsuario(email: string, password: string) {
-    const auth = getAuth();
-    let res;
-    await createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        res = userCredential.user;
-      })
-      .catch((error) => {
-        res = error.code;
-      });
-    return res;
+  async crearUsuario(email: string, password: string): Promise<string> {
+    let respuestaConsulta!: string;
+    await createUserWithEmailAndPassword(this.auth, email, password)
+      .then(userCredential => respuestaConsulta = userCredential.user.uid)
+      .catch(error => respuestaConsulta = error.code);
+    return respuestaConsulta;
   }
 
-  async logearUsuario(email: string, password: string) {
-    const auth = getAuth();
-    let res;
-    await signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        res = userCredential.user;
-      })
-      .catch((error) => {
-        res = error.code;
-      });
-    return res;
+  async logearUsuario(email: string, password: string): Promise<string> {
+    let respuestaConsulta!: string;
+    await signInWithEmailAndPassword(this.auth, email, password)
+      .then(userCredential => respuestaConsulta = userCredential.user.uid)
+      .catch(error => respuestaConsulta = error.code);
+    return respuestaConsulta;
   }
 
-  EstadoUsuario() {
-    return new Observable((observer) => {
-      getAuth().onAuthStateChanged((user) => {
-        if (user) {
-          observer.next(user);
-        } else {
-          observer.next(null);
-        }
+  EstadoUsuario(): Observable<any> {
+    return new Observable(observer => {
+      this.auth.onAuthStateChanged(user => {
+        user ? observer.next(user) : observer.next(null)
       });
     });
   }
 
-  cerrarSesion() {
-    getAuth().signOut();
+  cerrarSesion(): void {
+    this.auth.signOut();
   }
 }

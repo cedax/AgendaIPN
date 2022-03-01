@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ValidatorFn, ValidationErrors, AbstractControl } from "@angular/forms";
 import { Router } from '@angular/router';
 import { AuthService } from "./../../../servicios/auth/auth.service";
-
+ 
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.component.html',
@@ -30,24 +30,24 @@ export class RegistroComponent implements OnInit {
     });
   }
 
-  checkPasswords: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
+  checkMatchPasswords: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
     let pass = group.get('password')?.value;
     let confirmPass = group.get('passwordConfirm')?.value;
     return pass === confirmPass ? null : { passwordMatch: true }
   }
 
-  createForm() {
+  createForm(): void {
     this.registroForm = this.fb.group({
       email: ["", [Validators.required, Validators.email, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
       password: ["", [Validators.required, Validators.minLength(6)]],
       passwordConfirm: ["", [Validators.required, Validators.minLength(6)]],
-    }, { validators: this.checkPasswords });
+    }, { validators: this.checkMatchPasswords });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     if (this.registroForm.valid) {
-      this.auth.crearUsuario(this.registroForm.value.email, this.registroForm.value.password).then(res => {
-        if (res === 'auth/email-already-in-use') {
+      this.auth.crearUsuario(this.registroForm.value.email, this.registroForm.value.password).then(respuesta => {
+        if (respuesta === 'auth/email-already-in-use') {
           this.registroForm.get('email')?.setErrors({ emailInUse: true });
         } else {
           this.registroForm.reset();

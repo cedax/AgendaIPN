@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { EliminarDatosService } from 'src/app/servicios/eliminar-datos.service';
+import { Materia } from 'src/app/interfaces/materia';
+import { EliminarDatosService } from 'src/app/servicios/crud/eliminar-datos.service';
 
 @Component({
   selector: 'app-materia-de-horario',
@@ -7,18 +8,15 @@ import { EliminarDatosService } from 'src/app/servicios/eliminar-datos.service';
   styleUrls: ['./materia-de-horario.component.scss']
 })
 export class MateriaDeHorarioComponent implements OnInit {
-  @Input() datosForm: Array<any> = [];
-  datos: Array<any> = [];
+  @Input() datosForm!: Materia;
   mostrar: boolean = true;
 
   constructor(private eliminarDatosService: EliminarDatosService) { }
 
-  ngOnInit(): void {
-    this.datos.push(this.datosForm);
-  }
+  ngOnInit(): void { }
 
-  eliminarTarea(datos: any) {
-    this.eliminarDatosService.eliminarMateria(datos.id).then(() => {
+  eliminarTarea(materia: Materia): void {
+    this.eliminarDatosService.eliminarMateria(materia.id).then(() => {
       this.mostrar = false;
     });
   }
